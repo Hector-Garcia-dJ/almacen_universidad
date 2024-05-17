@@ -8,4 +8,5 @@ Este proyecto se esta realizando con la ayuda de varias herramientas, entre las 
 - HTML
 - JavaScript
 - MySQL
+- CSS
 
