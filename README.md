@@ -1,4 +1,11 @@
-# Proyecto escolar 📓
-El objetivo de este proyecto que se realizando junto con un equipo de compañeros. El cual consiste en crear una 
-aplicación web, para el almacén de la institución. Con este proyecto se busca que el almacén universitario tenga 
-un mejor control dentro de sus apartados administrativos. 
+# Proyecto Escolar 📓
+El objetivo de este proyecto, que estamos realizando junto con un equipo de compañeros, es crear una aplicación web para el almacén de nuestra institución educativa. Con el fin de que este proyecto, ayude a que el almacén universitario tenga un mejor control en sus apartados administrativos.
+
+## Diseño 💻
+Este proyecto se realizó utilizando varias herramientas, entre las que se encuentran:
+
+- Django
+- HTML
+- JavaScript
+- MySQL
+
