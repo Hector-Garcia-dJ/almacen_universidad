@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar Productos</title>
+    <!-- Pre-carga y enlace de la hoja de estilos styles8.css -->
+    <link rel="preload" href="/static/css/normalize.css" as="style">
+    <link rel="preload" href="/static/css/styles8.css" as="style">
+    <link href="/static/css/styles8.css" rel="stylesheet">
+</head>
+<body>
+    <h1>Productos Registrados</h1>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.id_producto }}</td>
+                    <td>{{ producto.nombre_producto }}</td>
+                    <td>{{ producto.cantidad }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

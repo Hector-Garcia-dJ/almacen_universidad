@@ -1,0 +1,68 @@
+/* HOJA DE ESTILO DE SOLICITUD  DE PRODCTOS */
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-image: url('https://www.uacm.edu.mx/portals/_default/skins/wcga-uacm/images/Plantel.jpg');
+            background-size: contain; /* Ajusta la imagen para que se vea completa */
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .formulario-container {
+            text-align: center;
+        }
+
+        .header {
+            text-align: center;
+            padding: 4px 20px; /* Ajusta el relleno del título */
+        }
+
+        .header h1 {
+            color: black;
+            margin-bottom: 20px;
+            font-size: 2em; /* Ajusta el tamaño del título */
+        }
+
+        .formulario {
+            width: 80%; /* Ajusta el ancho del formulario */
+            margin: 0 auto;
+            padding: 30px;
+            border: 1px solid #ccc;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+        }
+
+        .formulario label,
+        .formulario select,
+        .formulario input {
+            display: block;
+            margin: 25px auto; /* Ajusta la distancia entre los elementos del formulario */
+        }
+
+        .formulario select,
+        .formulario input {
+            width: 100%;
+            border: none;
+            border-radius: 30px;
+            padding: 5px; /* Ajusta el relleno del formulario */
+            font-size: 15px; /* Ajusta el tamaño del texto en el formulario */
+        }
+
+        .formulario button {
+            background-color: #b12424;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 10px; /* Ajusta el tamaño del botón */
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    
+
+

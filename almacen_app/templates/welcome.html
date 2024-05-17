@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Sistema de Inventario</title>
+    <title>Iniciar sesión</title>
+    <link rel="preload" href="/static/css/normalize.css" as="style">
+    <link rel="preload" href="/static/css/styles2.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/styles2.css">
+    <!-- Vincular archivo JavaScript externo 
+    <script src="/static/js/f_login.js"></script>-->
+    <link rel="icon" href="/static/img/checklist.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <div id="cabecera" style="background-image: url('https://889noticias.mx/wp-content/uploads/2020/06/cuautepec-UACM.jpg')" class="cabecera-estilo">
+    <h1>Sistema de Inventario</h1>
+    {% if user.is_authenticated %}
+        <p class="bienvenida">¡Bienvenido al sistema {{ user.username }}!</p>
+    {% endif %}
+</div>
+
+  
+  <div class="pagina_principal_frame" style="padding: 20px; background-color: transparent;">
+    <button class="boton" onclick="redirigirARegistrarProducto()">
+      <i class="fas fa-plus"></i> Registrar productos a la base de datos
+    </button>
+    <button class="boton" onclick="redirigirAInventario()">
+      <i class="fas fa-chart-bar"></i> Generar Reportes e Inventario
+    </button>
+    <button class="boton" onclick="redirigirASolicitudAlmacen()">
+      <i class="fas fa-shopping-cart"></i> Solicitud de artículos al almacén
+    </button>
+    {% if user.is_authenticated %}
+    <button class="boton" onclick="mostrarRegistroPersonas()">
+      <i class="fas fa-user-plus"></i> Registro de Personas
+    </button>
+    {% endif %}
+  </div>
+
+  <script>
+    function redirigirARegistrarProducto() {
+        window.location.href = "{% url 'registrar_productos' %}";
+    }
+
+    function redirigirASolicitudAlmacen() {
+      window.location.href = "{% url 'solicitudes' %}";
+  }
+  
+
+    function redirigirAInventario() {
+        window.location.href = "{% url 'generar_reportes' %}";
+    }
+
+  
+    {% if user.is_authenticated %}
+    function mostrarRegistroPersonas() {
+      window.location.href = "{% url 'registrar_persona' %}";
+    }
+  
+  {% endif %}
+  function buscar() {
+    var query = document.getElementById("entry_buscador").value;
+    // Agregar código para realizar la búsqueda
+  }
+
+  </script>
+</body>
+</html>

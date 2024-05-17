@@ -1,0 +1,202 @@
+/* HOJA DE ESTILOS DEL LOGIN */
+body {
+  font-family: 'Arial', sans-serif;
+  background-image: url('https://uacm.edu.mx/portals/_default/skins/wcga-uacm/images/Plantel.jpg');
+  background-size: contain; /* Ajusta la imagen para que se vea completa */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(4px); /* Aplica el desenfoque a la capa */
+
+}
+/* Estilos para el contenedor principal */
+.container {
+  background-color: #f9f9f9ef;
+  border: 2px solid #ccc;
+  border-radius: 100px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between; /* Distribuye los elementos horizontalmente */
+  align-items: center; /* Centra verticalmente los elementos */
+  padding: 40px;
+  width: 600px; /* Ajusta el ancho para acomodar los elementos */
+  position: relative;
+  transition: all 0.3s ease; /* Agregamos una transición suave */
+  animation: fadeIn 0.5s ease; /* Agregamos una animación de entrada */
+}
+
+.image {
+  position: absolute;
+  top: 50%; /* Centra verticalmente la imagen */
+  left: 25%; /* Centra horizontalmente la imagen */
+  transform: translate(-50%, -50%); /* Centra la imagen exactamente en el centro */
+  z-index: 2; /* Asegura que la imagen esté sobre el texto */
+}
+
+.image img {
+  width: 80px; /* Ajusta el tamaño de la imagen */
+  height: 80px; /* Ajusta el tamaño de la imagen */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  object-fit: cover; /* Mantiene la relación de aspecto y recorta la imagen si es necesario */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agrega una sombra suave a la imagen */
+  transition: transform 0.5s ease; /* Agrega una transición suave al pasar el cursor sobre la imagen */
+}
+
+/* Efecto de aumento al pasar el cursor sobre la imagen */
+.image img:hover {
+  transform: scale(1.1); /* Aumenta ligeramente el tamaño de la imagen */
+}
+
+
+/* Estilos para el saludo */
+.saludo {
+  font-family: 'Arial', sans-serif;
+  color: #fff;
+  font-size: 24px; /* Tamaño del saludo ajustado a 24px */
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 20px; /* Ajuste del padding */
+  background-color: rgba(243, 40, 40, 0.849); /* Fondo semi-transparente */
+  border-radius: 10px; /* Redondeamos los bordes */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra más suave */
+  position: absolute;
+  top: -50px; /* Distancia desde la parte superior del contenedor */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
+
+.saludo:hover {
+  background: linear-gradient(135deg, #4ebef2d0, #74b2f1d0); /* Cambio del color de fondo a un degradado azul */
+  background-color: rgba(0, 0, 0, 0.8); /* Cambio de color de fondo al pasar el mouse */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4); /* Aumento de la sombra */
+  transform: translate(-50%, -3px); /* Elevación sutil al pasar el mouse */
+}
+
+/* Estilos para el lado izquierdo */
+.left-side {
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+}
+
+/* Estilos para el lado derecho */
+.right-side {
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+}
+
+/* Estilos para el formulario de inicio de sesión */
+.login-form {
+  text-align: center;
+  width: 300px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ffffff00;
+  transition: all 0.3s ease; /* Agregamos una transición suave */
+  animation: slideInForm 0.5s ease; /* Agregamos una animación de entrada */
+}
+
+/* Estilos para los títulos */
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Estilos para las etiquetas */
+label {
+  display: block;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+/* Estilos para los inputs */
+input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px 0;
+  border: 2px solid #3498db;
+  border-radius: 5px;
+}
+
+/* Estilos para los botones */
+.button-group {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.button {
+  background-color: #2fc96a;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, color 0.3s;
+  margin-right: 10px; /* Ajusta el margen derecho */
+  transition: all 0.3s ease; /* Agregamos una transición suave */
+  margin-left: 15px; /* Ajusta el margen izquierdo */
+}
+
+.button:hover {
+  background-color: #3474ff;
+  transform: translateY(-3px); /* Agregamos un efecto de elevación al pasar el mouse */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Agregamos una sombra suave al pasar el mouse */
+}
+
+.cancel {
+  background-color: #b82a2a;
+}
+
+.cancel:hover {
+  background-color: #4989ff;
+}
+
+.remember-checkbox {
+  margin-right: -5px;
+  margin-top: 20px;
+  display: flex;
+}
+
+.remember-checkbox label {
+  margin-right: 80px;
+  margin-top: 0px; /* Sube el texto */
+  font-family: 'Arial black', sans-serif; /* Cambia la fuente a Arial o cualquier otra fuente deseada */
+  font-size: 15px; /* Cambia el tamaño de la fuente */
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  justify-content: center;
+  color: #2e2d2d; /* Color del texto */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el texto */
+}
+
+.remember-checkbox input[type="checkbox"] {
+  margin: 0; /* Elimina todos los márgenes del checkbox */
+  transform: scale(1); /* Aumenta el tamaño del checkbox */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el checkbox */
+
+}
+.remember-checkbox input[type="checkbox"]:checked {
+  background-color: #007bff; /* Cambia el color de fondo cuando está seleccionado */
+  border-color: #007bff; /* Cambia el color del borde cuando está seleccionado */
+}
+
+/* Estilos para los mensajes de error */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}

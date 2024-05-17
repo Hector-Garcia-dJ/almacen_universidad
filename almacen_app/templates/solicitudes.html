@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro de Nueva Solicitud</title>
+    <link rel="icon" href="https://th.bing.com/th/id/OIP.Iuq-Qr4l4LjFcvCyflnI7wHaHa?rs=1&pid=ImgDetMain" type="image/x-icon"/>
+    {% load static %}
+    <script src="{% static '/js/jquery-3.5.1.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles6.css">
+    <<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  </head>
+  <body>
+    <h1>Registro de Nueva Solicitud</h1>
+
+    <div class="formulario-container">
+      <div class="formulario">
+        <form
+          id="solicitudForm"
+          method="post"
+          action="{% url 'solicitudes' %}"
+        >
+          {% csrf_token %}
+          <label for="tipo_almacen">Tipo de Almacén:</label>
+          <select id="tipo_almacen" name="tipo_almacen" required>
+            <option value="" selected disabled>--SELECCIONE--</option>
+            {% for tipo_almacen in result %} {% if tipo_almacen.2 == 1 %}
+            <option value="{{ tipo_almacen.0 }}">{{ tipo_almacen.1 }}</option>
+            {% endif %} {% endfor %}
+          </select>
+
+          <label for="nombre_persona">Nombre de Persona:</label>
+          <select id="nombre_persona" name="nombre_persona">
+            <option value="" selected disabled>--SELECCIONE--</option>
+            {% for nombre_persona in result %} {% if nombre_persona.2 == 2 %}
+            <option value="{{ nombre_persona.0 }}">
+              {{ nombre_persona.1 }}
+            </option>
+            {% endif %} {% endfor %}
+          </select>
+
+          <label for="nombre_producto">Nombre del Producto:</label>
+          <select id="nombre_producto" name="nombre_producto">
+            <option value="" selected disabled>--SELECCIONE--</option>
+            {% for nombre_producto in result %} {% if nombre_producto.2 == 3 %}
+            <option value="{{ nombre_producto.0 }}">
+              {{ nombre_producto.1 }}
+            </option>
+            {% endif %} {% endfor %}
+          </select>
+
+          <label for="cantidad">Cantidad:</label>
+          <input type="number" id="cantidad" name="cantidad" min="1" />
+
+          <div class="botones">
+            <button type="submit" class="agregar"><i class="fas fa-plus"></i>Agregar</button>
+            <button type="button" class="borrar" id="limpiar_campos"><i class="fas fa-trash-alt"></i>Limpiar</button>
+            <button type="button" class="reporte"  id="btn-generar-reporte"><i class="fas fa-file-alt"></i>
+              Generar Reporte
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="tabla-container">
+        <h2>--------------------------Productos Solicitados</h2>
+        <div class="tabla-solicitud" style="display: none">
+          <table>
+            <thead>
+              <tr>
+                <th>Tipo de Almacén</th>
+                <th>Nombre de Persona</th>
+                <th>Nombre del Producto</th>
+                <th>Cantidad</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-solicitud-body">
+              <!-- Aquí se renderizarán los datos de los productos solicitados -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FORMULARIO, NO FUNCIONAL -->
+      <div class="formulario-reporte">
+        <form action="{% url 'generar_reportes' %}" method="post">
+          {% csrf_token %} {% for fila in tabla %}
+          <input
+            type="hidden"
+            name="tipo_almacen[]"
+            value="{{ fila.tipo_almacen }}"
+          />
+          <input
+            type="hidden"
+            name="nombre_persona[]"
+            value="{{ fila.nombre_persona }}"
+          />
+          <input
+            type="hidden"
+            name="nombre_producto[]"
+            value="{{ fila.nombre_producto }}"
+          />
+          <input type="hidden" name="cantidad[]" value="{{ fila.cantidad }}" />
+          {% endfor %}
+        </form>
+      </div>
+
+      <h2>Formulario de Correo</h2>
+      <div class="formulario-correo">
+        <form method="post" action="{% url 'solicitudes' %}">
+          <br />
+          <label for="destinatario">Destinatario</label>
+          <input type="email" id="destinatario" name="destinatario" required />
+          <label for="asunto">Asunto</label>
+          <input type="text" id="asunto" name="asunto" required />
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+          <button type="submit" class="enviar-correo"id="boton-enviar-correo"disabled><i class="fas fa-envelope"></i>Enviar Correo</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        $(".agregar").on("click", function (event) {
+          event.preventDefault();
+          var formData = $("#solicitudForm").serialize();
+          $.ajax({
+            url: $("#solicitudForm").attr("action"),
+            type: $("#solicitudForm").attr("method"),
+            data: formData,
+            success: function (data) {
+              console.log(data);
+              if (data) {
+                alert("Solicitud realizada correctamente.");
+
+                // Agregar una fila a la tabla con los datos de la solicitud
+                var tipoAlmacen = $("#tipo_almacen option:selected").text();
+                var nombrePersona = $("#nombre_persona option:selected").text();
+                var nombreProducto = $(
+                  "#nombre_producto option:selected"
+                ).text();
+                var cantidad = $("#cantidad").val();
+
+                var newRow =
+                  "<tr><td>" +
+                  tipoAlmacen +
+                  "</td><td>" +
+                  nombrePersona +
+                  "</td><td>" +
+                  nombreProducto +
+                  "</td><td>" +
+                  cantidad +
+                  "</td></tr>";
+                $("#tabla-solicitud-body").append(newRow);
+
+                // Mostrar la tabla después de agregar la fila
+                $(".tabla-solicitud").show();
+              } else {
+                $("#resultadosBusqueda").html(
+                  "<p>Ocurrió un error al procesar la solicitud.</p>"
+                );
+              }
+            },
+            error: function (xhr, errmsg, err) {
+              console.log(errmsg);
+            },
+          });
+        });
+
+        $("#btn-generar-reporte").on("click", function () {
+          var formData = new FormData($("#solicitudForm")[0]); // Utiliza FormData para enviar el formulario completo
+          $.ajax({
+            type: "POST",
+            url: "{% url 'generar_reportes' %}",
+            data: formData,
+            processData: false, // Evita que jQuery convierta el objeto formData en una cadena de consulta
+            contentType: false, // Evita que jQuery configure incorrectamente el encabezado Content-Type
+            beforeSend: function (xhr, settings) {
+              xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}"); // Incluye el token CSRF en la solicitud
+            },
+            success: function (response) {
+              var blob = new Blob([response], {
+                type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+              });
+              var link = document.createElement("a");
+              link.href = window.URL.createObjectURL(blob);
+              link.download = "reporte.docx";
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            },
+            error: function (xhr, errmsg, err) {
+              console.log(errmsg);
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

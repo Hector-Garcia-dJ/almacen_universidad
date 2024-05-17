@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Producto</title>
+    <link rel="preload" href="/static/css/normalize.css" as="style">
+    <link rel="preload" href="/static/css/styles8.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/styles8.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="icon" href="/static/img/report_icon.png" type="image/x-icon">
+</head>
+<body>
+
+    <div class="principal">
+        <h1>Registrar Producto</h1>
+    </div>
+    <form method="POST" action="{% url 'registrar_productos' %}">
+        {% csrf_token %}
+        <label for="id">ID del Producto:</label>
+        <input type="text" id="id" name="id">
+        <label for="nombre">Nombre del Producto:</label>
+        <input type="text" id="nombre" name="nombre">
+        <label for="cantidad">Cantidad:</label>
+        <input type="text" id="cantidad" name="cantidad">
+        <button type="submit" id="guardar">Registrar Producto</button>
+        <button type="button" id="limpiar" onclick="limpiarCampos()"><i class="fas fa-trash-alt"></i>Limpiar Campos</button>
+        <a href="{% url 'consultar_productos' %}" class="consultar-link">
+            <button type="button"><i class="fas fa-search"></i>Consultar Productos</button>
+        </a>
+    </form>
+    <button id="qrButton" onclick="toggleScanner()"> <i class="fas fa-qrcode"></i> Escanear QR </button>
+    <!-- Contenedor para el escáner de QR -->
+    <div id="scannerContainer">
+        <div id="reader"></div>
+        <div id="result"></div>
+    </div>
+    <!-- Mostrar el escáner de QR -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script>
+        var scannerVisible = false;
+        var htmlScanner = null;
+    
+        function toggleScanner() {
+            if (scannerVisible) {
+                htmlScanner.stop();
+                document.getElementById('scannerContainer').style.display = 'none';
+                scannerVisible = false;
+            } else {
+                htmlScanner.render(onScanSuccess);
+                document.getElementById('scannerContainer').style.display = 'block';
+                scannerVisible = true;
+            }
+        }
+    
+        function limpiarCampos() {
+            document.getElementById("id").value = "";
+            document.getElementById("nombre").value = "";
+            document.getElementById("cantidad").value = "";
+        }
+    
+        function domReady(fn) {
+            if (document.readyState === "complete" || document.readyState === "interactive") {
+                setTimeout(fn, 1);
+            } else {
+                document.addEventListener("DOMContentLoaded", fn);
+            }
+        }
+    
+        domReady(function() {
+            htmlScanner = new Html5QrcodeScanner(
+                "reader", { fps: 10, qrbox: 350 }
+            );
+        });
+    
+        function onScanSuccess(decodedText, decodedResult) {
+            var resultContainer = document.getElementById('result');
+            if (resultContainer) {
+                resultContainer.innerHTML = 'Tu QR es: ' + decodedText;
+                // Redirigir a la página después de leer el QR
+                window.location.href = decodedText; // Cambia esta línea según el formato de la URL que devuelve tu lector de QR
+            }
+        }
+    </script>
+</body>
+</html>

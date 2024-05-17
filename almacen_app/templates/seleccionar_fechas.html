@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Inventario e Informes</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('https://www.uacm.edu.mx/portals/_default/skins/wcga-uacm/images/Plantel.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: #0a0a0a;
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+        }
+
+        /* Encabezado */
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            color: #000000;
+        }
+
+        /* Formulario */
+        form {
+            margin-top: 20px;
+        }
+
+        /* Contenedor de botones */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        /* Botones */
+        button {
+            width: 48%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Tablas */
+        .table-container {
+            margin-top: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera para las tablas */
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #dddddd;
+        }
+
+        th {
+            background-color: #f2f2f2; /* Color de fondo para las cabeceras */
+            font-weight: bold;
+        }
+
+        /* Estilos para las tablas específicas */
+        #productosTabla {
+            display: none; /* Ocultar la tabla de productos inicialmente */
+        }
+
+        #solicitudesTabla {
+            display: none; /* Ocultar la tabla de solicitudes inicialmente */
+        }
+
+        /* Estilos para mensajes de error o éxito */
+        .message {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Generar reporte de inventario e informes</h1>
+        <form id="reporteProductosForm" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="fecha_inicio">Fecha de Inicio:</label>
+                <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio">
+            </div>
+            <div class="form-group">
+                <label for="fecha_fin">Fecha de Fin:</label>
+                <input type="date" class="form-control" id="fecha_fin" name="fecha_fin">
+            </div>
+            <div class="button-container">
+                <button type="button" id="generarReporteProductosBtn" class="btn btn-primary">Generar Reporte de Productos</button>
+                <button type="button" id="generarReporteSolicitudesBtn" class="btn btn-primary">Generar Reporte de Solicitudes</button>
+                <button type="button" id="descargarPdfBtn" class="btn btn-success">Descargar PDF</button>
+                <button type="button" id="limpiarCamposBtn" class="btn btn-danger">Limpiar Campos</button>
+            </div>
+        </form>
+
+        <div id="productosTabla" class="table-container">
+            <h2>Inventario de Productos</h2>
+            <table id="productosTable" class="table">
+                <!-- Aquí se mostrarán los productos generados dinámicamente -->
+            </table>
+        </div>
+
+        <div id="solicitudesTabla" class="table-container">
+            <h2>Informe de Solicitudes</h2>
+            <table id="solicitudesTable" class="table">
+                <!-- Aquí se mostrarán las solicitudes de productos generadas dinámicamente -->
+            </table>
+        </div>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{% static 'jquery-3.5.1.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#generarReporteProductosBtn').click(function() {
+                generarReporte('productos');
+            });
+
+            $('#generarReporteSolicitudesBtn').click(function() {
+                generarReporte('solicitudes');
+            });
+
+            $('#descargarPdfBtn').click(function() {
+                descargarPDF();
+            });
+
+            $('#limpiarCamposBtn').click(function() {
+                $('#fecha_inicio').val('');
+                $('#fecha_fin').val('');
+                $('#productosTable').empty();
+                $('#productosTabla').hide();
+                $('#solicitudesTable').empty();
+                $('#solicitudesTabla').hide();
+                $('#message').html('Campos limpiados').removeClass('text-danger').addClass('text-success');
+            });
+
+            function generarReporte(tipo) {
+                var fechaInicio = $('#fecha_inicio').val();
+                var fechaFin = $('#fecha_fin').val();
+
+                $.ajax({
+                    url: '{% url "generar_reporte_productos" %}',
+                    type: 'POST',
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        fecha_inicio: fechaInicio,
+                        fecha_fin: fechaFin,
+                        tipo_reporte: tipo
+                    },
+                    success: function(response) {
+                        var data = response[tipo];
+                        var html = '<table class="table"><thead>';
+
+                        if (tipo === 'productos') {
+                            html += '<tr><th>ID Producto</th><th>Nombre Producto</th><th>Cantidad Total</th><th>Tipo Almacén</th><th>Dirección</th><th>Correo</th><th>Teléfono</th></tr>';
+                        } else if (tipo === 'solicitudes') {
+                            html += '<tr><th>ID Solicitud</th><th>Tipo Almacén</th><th>Nombre Persona</th><th>Nombre Producto</th><th>Cantidad</th><th>Fecha Solicitud</th></tr>';
+                        }
+
+                        html += '</thead><tbody>';
+
+                        data.forEach(function(item) {
+                            if (tipo === 'productos') {
+                                html += '<tr><td>' + item.id_producto + '</td><td>' + item.nombre_producto + '</td><td>' + item.cantidad_total + '</td><td>' + item.tipo_almacen + '</td><td>' + item.direccion + '</td><td>' + item.correo + '</td><td>' + item.telefono + '</td></tr>';
+                            } else if (tipo === 'solicitudes') {
+                                html += '<tr><td>' + item.id_solicitud + '</td><td>' + item.tipo_almacen + '</td><td>' + item.nombre_persona + '</td><td>' + item.nombre_producto + '</td><td>' + item.cantidad + '</td><td>' + item.fecha_solicitud + '</td></tr>';
+                            }
+                        });
+
+                        html += '</tbody></table>';
+
+                        if (tipo === 'productos') {
+                            $('#productosTable').html(html);
+                            $('#productosTabla').show();
+                            $('#solicitudesTabla').hide();
+                        } else if (tipo === 'solicitudes') {
+                            $('#solicitudesTable').html(html);
+                            $('#solicitudesTabla').show();
+                            $('#productosTabla').hide();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        $('#message').html('Error al generar el reporte').addClass('text-danger');
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+
+            function descargarPDF() {
+                var pdf = new jsPDF();
+
+                pdf.text(20, 20, 'Este es un ejemplo de contenido en el PDF.');
+
+                pdf.save('reporte.pdf');
+            }
+        });
+    </script>
+</body>
+</html>

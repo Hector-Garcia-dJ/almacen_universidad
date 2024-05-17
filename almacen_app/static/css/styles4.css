@@ -1,0 +1,91 @@
+
+/* Estilos página reportes */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url('https://www.uacm.edu.mx/portals/_default/skins/wcga-uacm/images/Plantel.jpg');
+    background-size: contain; /* Ajusta la imagen para que se vea completa */
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #0a0a0a;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+/* Encabezado */
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    color: #000000;
+}
+
+/* Formulario */
+form {
+    margin-top: 20px;
+}
+
+/* Contenedor de botones */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* Botones */
+button {
+    width: 48%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Tablas */
+.table-container {
+    margin-top: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera para las tablas */
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #dddddd;
+}
+
+th {
+    background-color: #f2f2f2; /* Color de fondo para las cabeceras */
+    font-weight: bold;
+}
+
+/* Estilos para las tablas específicas */
+#productosTabla {
+    display: none; /* Ocultar la tabla de productos inicialmente */
+}
+
+#solicitudesTabla {
+    display: none; /* Ocultar la tabla de solicitudes inicialmente */
+}
+
+/* Estilos para mensajes de error o éxito */
+.message {
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+}

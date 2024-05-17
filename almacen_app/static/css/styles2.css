@@ -1,0 +1,110 @@
+
+/* HOJA DE ESTILO DE  LA PAGINA PRINCIPAL*/
+
+body {
+  background-color: #f8f9fa;
+}
+
+/* Estilos para la cabecera */
+#cabecera {
+  background-image: url('https://889noticias.mx/wp-content/uploads/2020/06/cuautepec-UACM.jpg');
+  background-size: contain; /* Ajusta la imagen para que se vea completa */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: rgb(248, 248, 248);
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#cabecera h1 {
+  font-size: 38px; /* Reducir el tamaño del título */
+  margin: 0;
+  text-shadow: 2px 2px 4px rgb(0, 0, 0); /* Sombra de texto */
+}
+
+#cabecera .bienvenida {
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Agrega sombra con offset de 2px en ambas direcciones y un blur de 4px */
+}
+
+/* Estilos para los botones y el marco de la página principal */
+.pagina_principal_frame {
+  padding: 20px;
+  background-color: transparent;
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 100px; /* Ajusta este valor para cambiar el espacio entre los botones */
+}
+
+.boton {
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40%; /* Ajustar el ancho de los botones */
+  max-width: 200px; /* Ajustar el ancho máximo */
+  height: 60px; /* Altura fija para todos los botones */
+  box-sizing: border-box; /* Incluir padding y borde en el tamaño total del botón */
+  width: calc(50% - 10px);
+  cursor: pointer;
+  background-color:  #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+.boton:hover {
+  background-color: #8d0606;
+}
+
+.boton i {
+  margin-right: 10px;
+}
+
+/* Agregar animación de escalado al botón al hacer clic */
+.boton:active {
+  transform: scale(0.95);
+}
+
+/* Estilos para el buscador */
+#buscador_frame {
+  text-align: center;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#entry_buscador {
+  width: 200px;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 20px;
+  font-size: 15px;
+  outline: none;
+}
+
+#btn_buscar {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+#btn_buscar:hover {
+  background-color: #0056b3;
+}
