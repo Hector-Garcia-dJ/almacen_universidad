@@ -1,9 +1,8 @@
-/*hoja de estilo para la página de solicitudes */
+/* Hoja de estilo para la página de solicitudes */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     background-image: url('https://www.uacm.edu.mx/portals/_default/skins/3d-universidad/images/Slide2-1.png');
-    background-size: contain; /* Ajusta la imagen para que se vea completa */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -11,222 +10,189 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    backdrop-filter: blur(4px); /* Desenfoque del fondo */
-    
+    backdrop-filter: blur(4px);
 }
 
 h1 {
     position: absolute;
-    top: 40%;
+    top: 40px;
     left: 50%;
-    transform: translate(-50%, -596%);
+    transform: translate(-50%, -50%);
     text-align: center;
-    font-size: 50px;
+    font-size: 24px;
     font-weight: bold;
-    z-index: 1;
     color: #333;
-    font-family: 'Arial', sans-serif; /* Agregar fuente */
-    font-size: 24px; /* Ajustar tamaño de fuente */
-    font-weight: bold; /* Añadir negrita */
-    padding: 10px 20px; /* Ajustar el relleno */
-    background-color: rgba(252, 140, 65, 0.788); /* Ajustar color de fondo */
-    border-radius: 10px; /* Redondear los bordes */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Agregar sombra */
-    white-space: nowrap; /* Evitar división de texto en varias líneas */
-    display: inline-block; /* Cambiar a bloque en línea */
+    padding: 10px 20px;
+    background-color: rgba(252, 140, 65, 0.788);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 h2 {
     position: absolute;
-    top: 50%;
+    top: -10px;
     left: 50%;
-    transform: translate(56%, -1350%);
+    transform: translate(-50%, -50%);
     text-align: center;
     font-size: 15px;
     font-weight: bold;
-    z-index: 1;
 }
 
 .formulario-container {
-    max-width: 800px; /* Establece el ancho máximo del contenedor */
-    margin: 0; /* Elimina el margen */
-    padding: 20px 0px;
+    max-width: 800px;
+    margin: 0;
+    padding: 20px;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     display: flex;
-    justify-content: flex-start; /* Alinea el contenido hacia la izquierda */
-    align-items: flex-start; /* Alinea los elementos arriba */
     gap: 50px;
-    position: absolute; /* Ajusta la posición */
-    left: 60px; /* Ajusta la distancia desde el borde izquierdo */
+    position: absolute;
+    left: 60px;
 }
 
 .formulario,
 .formulario-correo {
-    flex: 1; /* Ocupa el mismo ancho */
-    margin: 0 50px; /* Espacio entre los formularios */
+    flex: 1;
+    margin: 0 50px;
 }
 
 .formulario label,
 .formulario-correo label {
-    display: flex; /* Utiliza flexbox */
-    flex-direction: column; /* Alinea los elementos en columna */
-    margin-bottom: 10px; /* Agrega un margen inferior */
-    font-size: 16px; /* Tamaño de fuente */
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    font-size: 16px;
 }
 
-/* Aplica el diseño a todas las cajas de texto y elementos de selección */
 .formulario input,
 .formulario textarea,
 .formulario select,
 .formulario-correo input,
 .formulario-correo textarea,
 .formulario-correo select {
-    width: 250px; /* Ancho predeterminado para todas las cajas de texto y selectores */
+    width: 250px;
     padding: 10px;
     margin-bottom: 25px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: 3px solid #3c80e7;
+    border-radius: 10px;
     box-sizing: border-box;
     background-color: white;
     color: #555;
     font-size: 16px;
 }
 
-/* Aplica el color de borde azul a los campos requeridos */
-.formulario input:required,
-.formulario textarea:required,
-.formulario-correo input:required,
-.formulario-correo textarea:required,
-.formulario select:required,
-.formulario-correo select:required {
-    border-color: blue;
-}
-
-/* Estilo para los botones dentro de cada formulario */
 .formulario button,
 .formulario-correo button {
     padding: 8px 16px;
     background-color: #4CAF50;
-    color: white;
-    border: none;
+    color: black;
     border-radius: 50px;
     cursor: pointer;
-    transition: background-color 0.3s; 
-    margin-right: 10px; 
-    margin-top: 20px;
+    transition: background-color 0.3s;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 10px; /* Añadido para separar los botones verticalmente */
 }
 
-/* Cambia el color de fondo del botón cuando el cursor está sobre él */
+.formulario button i,
+.formulario-correo button i{
+    margin-right: 10px;
+}
+
 .formulario button:hover,
 .formulario-correo button:hover {
-    background-color: #6093a3;
+    background-color: #3474ff;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: black;
 }
 
-/* Cambios de botón Reporte */
-.formulario button.reporte{
-    background-color: #2c82c9; 
-    color: white; 
+.formulario button.reporte {
+    background-color: #2c82c9;
 }
 
-
-.formulario button.borrar{
-    background-color: #da2828; 
-    color: white; 
+.formulario button.borrar {
+    background-color: #da2828;
 }
 
-
-.formulario button.agregar{
-    background-color: #078f1d; 
-    color: white; 
+.formulario button.agregar {
+    background-color: #3aac4d;
 }
 
-/* Cambios de botón Enviar Correo */
 .formulario-correo button.enviar-correo {
-    background-color: #078f1d;
+    background-color: #bc30d8;
 }
 
-/* Estilos para el contenedor formulario-correo */
 .formulario-correo {
-    flex: 1; /* Ocupa el mismo ancho */
-    margin: 0 30px; /* Espacio entre los formularios */
-    position: relative; /* Ajusta la posición */
+    margin: 0 30px;
+    position: relative;
 }
 
-/* Estilos para el contenedor containerTabla */
 #containerTabla {
-    position: absolute; /* Posición absoluta */
-    left: 5px; /* Cambia esto para mover el contenedor hacia la izquierda */
-    top: 5; /* Alinea con la parte superior del contenedor padre */
-    width: 130px; /* Ancho del contenedor */
-    background-color: rgba(255, 255, 255, 15); /* Color de fondo */
-    border-radius: 90px; /* Borde redondeado */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra */
-    padding: 800px; /* Espaciado interno */
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 130px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 90px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
 }
 
-/* Estilos para la tabla dentro de containerTabla */
 #containerTabla table {
-    width: 10%; /* Ancho completo */
-    border-collapse: collapse; /* Borde colapsado */
+    width: 100%;
+    border-collapse: collapse;
 }
 
-/* Estilos para las celdas de la tabla dentro de containerTabla */
 #containerTabla th, #containerTabla td {
-    padding: 5px; /* Espaciado interno */
-    text-align: center; /* Alineación del texto */
+    padding: 5px;
+    text-align: center;
     border-radius: 5px;
 }
 
-/* Estilos para el encabezado de la tabla dentro de containerTabla */
 #containerTabla th {
-    background-color: #f2f2f2; /* Color de fondo */
-    color: #333; /* Color del texto */
-    border: 0px solid #5f0101; /* Borde */
-    border-radius: 10px; /* Borde redondeado */
+    background-color: #f2f2f2;
+    color: #333;
 }
 
-/* Estilos para el contenedor de la tabla */
 .tabla-container {
-    flex: 100; /* Ocupa el mismo ancho */
-    margin: 500 10px; /* Espacio entre los formularios */
-    position: relative; /* Ajusta la posición */
+    flex: 1;
+    margin: 10px;
+    position: relative;
 }
 
-/* Estilos para la tabla dentro del contenedor */
 .tabla-solicitud {
-    background-color: rgba(255, 255, 255, 0.8); /* Color de fondo de la tabla */
-    border-radius: 10px; /* Borde redondeado */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra */
-    padding: 2px; /* Espaciado interno */
-    width: calc(100% - 100px); /* Ancho total menos el margen derecho */
-    position: absolute; /* Ajusta la posición */
-    left:450px; /* Ajusta la distancia desde el borde izquierdo */
-    top: -15px; /* Ajusta la distancia desde la parte superior */
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: calc(100% - 100px);
+    position: absolute;
+    left: 450px;
+    top: -15px;
 }
 
-/* Estilos para la tabla dentro de .tabla-solicitud */
 .tabla-solicitud table {
-    width: 100%; /* Ancho completo */
-    border-collapse: collapse; /* Borde colapsado */
+    width: 100%;
+    border-collapse: collapse;
 }
 
-/* Estilos para las filas y celdas de la tabla */
 .tabla-solicitud th, .tabla-solicitud td {
-    padding: 20px; /* Espaciado interno */
-    text-align: center; /* Alineación del texto */
-    border: 3px solid #740404; /* Borde */
+    padding: 20px;
+    text-align: center;
+    border: 3px solid #740404;
 }
 
-/* Estilos para el encabezado de la tabla */
 .tabla-solicitud th {
-    background-color: #e23517b0; /* Color de fondo */
-    color: #000000; /* Color del texto */
+    background-color: #e23517b0;
+    color: #000;
 }
 
-/* Estilos para las celdas de la tabla */
 .tabla-solicitud td {
-    background-color: #ffffff; /* Color de fondo */
-    color: #333; /* Color del texto */
+    background-color: #fff;
+    color: #333;
 }

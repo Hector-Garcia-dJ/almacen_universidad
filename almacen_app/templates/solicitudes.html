@@ -2,17 +2,19 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1366, initial-scale=0.8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registro de Nueva Solicitud</title>
+    <link rel="preload" href="/static/css/normalize.css" as="style">
+    <link rel="preload" href="/static/css/styles6.css">
     <link rel="icon" href="https://th.bing.com/th/id/OIP.Iuq-Qr4l4LjFcvCyflnI7wHaHa?rs=1&pid=ImgDetMain" type="image/x-icon"/>
-    {% load static %}
-    <script src="{% static '/js/jquery-3.5.1.js' %}"></script>
+    <script src="/static/js/jquery-3.5.1.js"></script>
+    <script src="/statatic/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/css/styles6.css">
     <<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   </head>
   <body>
     <h1>Registro de Nueva Solicitud</h1>
-
     <div class="formulario-container">
       <div class="formulario">
         <form
@@ -53,7 +55,7 @@
           <input type="number" id="cantidad" name="cantidad" min="1" />
 
           <div class="botones">
-            <button type="submit" class="agregar"><i class="fas fa-plus"></i>Agregar</button>
+            <button type="button" class="agregar"><i class="fas fa-plus"></i>Agregar</button>
             <button type="button" class="borrar" id="limpiar_campos"><i class="fas fa-trash-alt"></i>Limpiar</button>
             <button type="button" class="reporte"  id="btn-generar-reporte"><i class="fas fa-file-alt"></i>
               Generar Reporte
@@ -63,7 +65,7 @@
       </div>
 
       <div class="tabla-container">
-        <h2>--------------------------Productos Solicitados</h2>
+        {% comment %} <h2>-Productos Solicitados</h2> {% endcomment %}
         <div class="tabla-solicitud" style="display: none">
           <table>
             <thead>
@@ -105,8 +107,8 @@
         </form>
       </div>
 
-      <h2>Formulario de Correo</h2>
       <div class="formulario-correo">
+        {% comment %} <h2>Formulario de Correo</h2> {% endcomment %}
         <form method="post" action="{% url 'solicitudes' %}">
           <br />
           <label for="destinatario">Destinatario</label>
@@ -115,7 +117,7 @@
           <input type="text" id="asunto" name="asunto" required />
           <label for="mensaje">Mensaje</label>
           <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
-          <button type="submit" class="enviar-correo"id="boton-enviar-correo"disabled><i class="fas fa-envelope"></i>Enviar Correo</button>
+          <button type="button" class="enviar-correo"id="boton-enviar-correo"disabled><i class="fas fa-envelope"></i>Enviar Correo</button>
         </form>
       </div>
     </div>

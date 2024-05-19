@@ -111,8 +111,7 @@ def consultar_productos(request):
 
     return render(request, 'consultar_productos.html', {'productos': productos})
 
-
-def generar_reportes_view(request):
+def generar_reportes(request):
     if request.method == 'POST':
         fecha_inicio = request.POST.get('fecha_inicio')
         fecha_fin = request.POST.get('fecha_fin')
@@ -125,12 +124,13 @@ def generar_reportes_view(request):
 
         # Convertir los resultados a formato JSON
         productos_json = [{'id_producto': producto[0], 'nombre_producto': producto[1],
-                        'cantidad_total': producto[2], 'tipo_almacen': producto[3],
-                        'direccion': producto[4], 'correo': producto[5], 'telefono': producto[6]} for producto in productos]
+                           'cantidad_total': producto[2], 'tipo_almacen': producto[3],
+                           'direccion': producto[4], 'correo': producto[5], 'telefono': producto[6]} for producto in productos]
 
         solicitudes_json = [{'id_solicitud': solicitud[0], 'tipo_almacen': solicitud[1],
-                            'nombre_persona': solicitud[2], 'nombre_producto': solicitud[3],
-                            'cantidad': solicitud[4], 'fecha_solicitud': solicitud[5]} for solicitud in solicitudes]
+                             'nombre_persona': solicitud[2], 'nombre_producto': solicitud[3],
+                             'cantidad': solicitud[4], 'fecha_solicitud': solicitud[5]} for solicitud in solicitudes]
+       
         # Imprimir los resultados para verificar
         print("Productos obtenidos:")
         for producto in productos:
@@ -144,7 +144,8 @@ def generar_reportes_view(request):
         data = {'productos': productos_json, 'solicitudes': solicitudes_json}
         return JsonResponse(data)
 
-    return render(request, 'seleccionar_fechas.html')
+    return render(request, 'generar_reportes.html')
+
 
 
 

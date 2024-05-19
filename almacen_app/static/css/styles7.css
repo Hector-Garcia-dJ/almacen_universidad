@@ -1,68 +1,205 @@
-/* HOJA DE ESTILO DE SOLICITUD  DE PRODCTOS */
+/* Estilos página reportes */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-image: url('../img/img1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    backdrop-filter: blur(4px);
+    color: rgb(0, 0, 0, 0.5);
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-image: url('https://www.uacm.edu.mx/portals/_default/skins/wcga-uacm/images/Plantel.jpg');
-            background-size: contain; /* Ajusta la imagen para que se vea completa */
-            background-size: cover;
-            background-position: center top;
-            background-repeat: no-repeat;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+/* Encabezado */
+h1 {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    padding: 10px 20px;
+    background-color: rgba(252, 140, 65, 0.788);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
 
-        .formulario-container {
-            text-align: center;
-        }
+/* Contenedor principal */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        .header {
-            text-align: center;
-            padding: 4px 20px; /* Ajusta el relleno del título */
-        }
+/* Formulario */
+form {
+    width: 100%;
+    margin-top: 20px;
+}
 
-        .header h1 {
-            color: black;
-            margin-bottom: 20px;
-            font-size: 2em; /* Ajusta el tamaño del título */
-        }
+/* Contenedor de botones */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 100%;
+}
 
-        .formulario {
-            width: 80%; /* Ajusta el ancho del formulario */
-            margin: 0 auto;
-            padding: 30px;
-            border: 1px solid #ccc;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-        }
-
-        .formulario label,
-        .formulario select,
-        .formulario input {
-            display: block;
-            margin: 25px auto; /* Ajusta la distancia entre los elementos del formulario */
-        }
-
-        .formulario select,
-        .formulario input {
-            width: 100%;
-            border: none;
-            border-radius: 30px;
-            padding: 5px; /* Ajusta el relleno del formulario */
-            font-size: 15px; /* Ajusta el tamaño del texto en el formulario */
-        }
-
-        .formulario button {
-            background-color: #b12424;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            padding: 10px 10px; /* Ajusta el tamaño del botón */
-            cursor: pointer;
-            margin-top: 20px;
-        }
-    
+/* Botones */
+button {
+    width: 48%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #007BFF;
+    color: #ffffff;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
 
+button.reporte {
+    background-color: #2c82c9;
+}
+
+button.borrar {
+    background-color: #da2828;
+}
+
+button.agregar {
+    background-color: #3aac4d;
+}
+
+button i {
+    margin-right: 10px;
+}
+
+button:hover {
+
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Tablas */
+.table-container {
+    width: 100%;
+    margin-top: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #dddddd;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    color: #333;
+}
+
+td {
+    background-color: #fff;
+    color: #333;
+}
+
+/* Estilos para las tablas específicas */
+#productosTabla, #solicitudesTabla {
+    display: none; /* Ocultar las tablas inicialmente */
+}
+
+/* Estilos para mensajes de error o éxito */
+.message {
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #ff0000;
+}
+
+/* Contenedor de formulario */
+.formulario-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.formulario, .formulario-correo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formulario label, .formulario-correo label {
+    font-size: 16px;
+}
+
+.formulario input, .formulario textarea, .formulario select,
+.formulario-correo input, .formulario-correo textarea, .formulario-correo select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 3px solid #3c80e7;
+    border-radius: 10px;
+    background-color: white;
+    color: #555;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Contenedor de tabla */
+.tabla-container {
+    width: 100%;
+}
+
+.tabla-solicitud {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 100%;
+}
+
+.tabla-solicitud table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-solicitud th, .tabla-solicitud td {
+    padding: 10px;
+    text-align: center;
+    border: 3px solid #740404;
+}
+
+.tabla-solicitud th {
+    background-color: #e23517b0;
+    color: #000;
+}
+
+.tabla-solicitud td {
+    background-color: #fff;
+    color: #333;
+}

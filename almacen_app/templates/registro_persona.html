@@ -2,11 +2,13 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=1366, initial-scale=0.8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Persona</title>
     <link rel="preload" href="/static/css/normalize.css" as="style">
     <link rel="preload" href="/static/css/styles5.css">
     <link rel="stylesheet" type="text/css" href="/static/css/styles5.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <div class="header">
@@ -20,21 +22,23 @@
                 <option value="docente">Docente</option>
                 <option value="mantenimiento">Personal de Mantenimiento</option>
             </select>
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
-            <label for="apellido_paterno">Apellido Paterno:</label>
-            <input type="text" id="apellido_paterno" name="apellido_paterno" required>
-            <label for="apellido_materno">Apellido Materno:</label>
-            <input type="text" id="apellido_materno" name="apellido_materno" required>
-            <label for="telefono">Teléfono:</label>
-            <input type="text" id="telefono" name="telefono" required>
-            <label for="correo">Correo Electrónico:</label>
-            <input type="email" id="correo" name="correo" required>
-            <label for="contrasena">Contraseña:</label>
-            <input type="password" id="contrasena" name="contrasena" required>
-            <button type="submit">Registrar Persona</button>
-            <button type="button" onclick="limpiarCampos()">Limpiar Campos</button>
-        </form>
+            <div class="contenido">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+                <label for="apellido_paterno">Apellido Paterno:</label>
+                <input type="text" id="apellido_paterno" name="apellido_paterno" required>
+                <label for="apellido_materno">Apellido Materno:</label>
+                <input type="text" id="apellido_materno" name="apellido_materno" required>
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono" required>
+                <label for="correo">Correo Electrónico:</label>
+                <input type="email" id="correo" name="correo" required>
+                <label for="contrasena">Contraseña:</label>
+                <input type="password" id="contrasena" name="contrasena" required>
+                <button class="agregar" type="submit"><i class="fas fa-search"></i>Registrar Persona</button>
+                <button class="borrar" type="button" onclick="limpiarCampos()"><i class="fas fa-trash-alt"></i>Limpiar Campos</button>
+            </div>
+            </form>
     </div>
     <script>
         function limpiarCampos() {
