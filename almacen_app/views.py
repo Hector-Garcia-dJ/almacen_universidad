@@ -8,12 +8,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
-from .models import Persona, Rol, Singleton, Producto
+from .models import Persona, Rol, Singleton, Producto, Solicitud
 from almacen_app.models import Persona as AlmacenPersona
 from .forms import RegistroPersonaForm, SolicitudAlmacenCentralForm
 from django.core.mail import send_mail
 from django.db import connection
 from django.contrib import messages
+from django.views.decorators.http import require_POST
 
 
 
@@ -148,10 +149,11 @@ def generar_reportes(request):
 
 
 
-
 def solicitudes_view(request):
     result = None
     solicitud_data = None
+    solicitud_id = None  # Asignar un valor predeterminado a solicitud_id
+    error_message = None
 
     if request.method == 'POST':
         # Obtener datos del formulario
@@ -174,17 +176,23 @@ def solicitudes_view(request):
                     'Solicitud', [None, cantidad, tipo_almacen, nombre_persona, nombre_producto])
                 # Obtener el ID de la solicitud asignada
                 solicitud_id = cursor.fetchone()[0]
+
+                print("ID de la solicitud:", solicitud_id)
+
                 # Recuperar todos los datos de la solicitud recién insertada
                 cursor.execute(
                     'SELECT * FROM almacen_app_solicitud WHERE id_solicitud = %s', [solicitud_id])
                 solicitud_data = cursor.fetchone()
-
+                print("Datos insertados correctamente en la base de datos")
                 # Llamar al procedimiento 'Datos' para obtener los datos para el formulario
                 cursor.callproc('Datos')
                 result = cursor.fetchall()
+
             except Exception as e:
                 print(e)  # Manejar la excepción de manera adecuada en tu aplicación
+                return JsonResponse({'error': str(e)})
 
+        return JsonResponse({'solicitud_id': solicitud_id})
     else:
         # Si la solicitud no es un POST, obtener los datos para el formulario
         with connection.cursor() as cursor:
@@ -194,6 +202,18 @@ def solicitudes_view(request):
             except Exception as e:
                 print(e)  # Manejar la excepción de manera adecuada en tu aplicación
 
-    return render(request, 'solicitudes.html', {'result': result, 'solicitud_data': solicitud_data})
+    return render(request, 'solicitudes.html', {'result': result, 'solicitud_data': solicitud_data, 'solicitud_id': solicitud_id, 'error_message': error_message})
 
-
+@require_POST
+def borrar_producto(request):
+    if request.method == "POST":
+        solicitud_id = request.POST.get("solicitud_id")
+        try:
+            with connection.cursor() as cursor:
+                # Llamar al procedimiento almacenado pasando el ID de la solicitud como parámetro
+                cursor.callproc("borrar_producto", [solicitud_id])
+            return JsonResponse({"message": "Solicitud eliminada correctamente."})
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+    else:
+        return JsonResponse({"error": "Método no permitido."}, status=405)

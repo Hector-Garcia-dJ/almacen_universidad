@@ -1,5 +1,4 @@
-
-/* HOJA DE ESTILO DE  LA PAGINA PRINCIPAL*/
+/* HOJA DE ESTILO DE LA PAGINA PRINCIPAL*/
 
 body {
   background-color: #f8f9fa;
@@ -61,6 +60,8 @@ body {
   border: none;
   border-radius: 10px;
   transition: background-color 0.3s;
+  overflow: hidden; /* Esconder el texto desbordante */
+  text-overflow: ellipsis; /* Agregar "..." al texto desbordante */
 }
 
 .boton:hover {
@@ -107,4 +108,42 @@ body {
 
 #btn_buscar:hover {
   background-color: #0056b3;
+}
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+  #cabecera {
+    padding: 20px;
+  }
+
+  #cabecera h1 {
+    font-size: 28px;
+  }
+
+  #cabecera .bienvenida {
+    font-size: 16px;
+  }
+
+  .pagina_principal_frame {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .boton {
+    width: 80%;
+    max-width: none;
+    font-size: 14px; /* Reducir el tamaño de la fuente */
+    padding: 8px; /* Reducir el padding */
+  }
+
+  #entry_buscador {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  #btn_buscar {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 10px;
+  }
 }

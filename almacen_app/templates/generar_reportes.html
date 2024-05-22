@@ -9,15 +9,17 @@
     <link rel="preload" href="/static/css/normalize.css" as="style">
     <link rel="preload" href="/static/css/styles4.css">
     <link rel="stylesheet" type="text/css" href="/static/css/styles4.css">
-    <link rel="icon" href="https://www.pngmart.com/files/8/Report-PNG-Photos.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="/static/js/jquery-3.5.1.js"></script>
-    <script src="/static/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet"  href="/static/js/jquery-3.5.1.js">
+    <link rel="icon" href="../static/img/reporte.png" type="image/x-icon">
+    {% load static %}
+    <script src="{% static '/js/jquery-3.5.1.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.17/jspdf.plugin.autotable.min.js"></script>
 </head>
+
 <body>
     <div class="container">
-        <h1 class="mt-5">Generar reportes e inventario</h1>
+        <h1 class="mt-5">Generar Reportes e Inventario</h1>
         <form id="reporteProductosForm" method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -29,10 +31,17 @@
                 <input type="date" class="form-control" id="fecha_fin" name="fecha_fin">
             </div>
             <div class="button-container">
-                <button type="button" class="r_producto" id="generarReporteProductosBtn" class="btn btn-primary"><i class="fas fa-box-open"></i>Reporte de Productos</button>
-                <button type="button" class="r_solicitud"id="generarReporteSolicitudesBtn" class="btn btn-primary"><i class="fas fa-file-alt"></i> Reporte de Solicitudes</button>
-                <button type="button" class="pdf" id="descargarPdfBtn" class="btn btn-success"><i class="fas fa-download"></i> Descargar PDF</button>
-                <button type="button" class="borrar" id="limpiarCamposBtn" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Limpiar Campos</button>
+                <button class="r_producto" type="button" id="generarReporteProductosBtn" ><i class="fas fa-box"></i> Reporte de Productos
+                </button>
+                <button class="r_solicitud" type="button" id="generarReporteSolicitudesBtn">
+                    <i class="fas fa-file-alt"></i> Reporte de Solicitudes
+                </button>
+                <button class="pdf" type="button" id="descargarPdfBtn" >
+                    <i class="fas fa-download"></i> Descargar PDF
+                </button>
+                <button class="borrar" type="button" id="limpiarCamposBtn">
+                    <i class="fas fa-eraser"></i> Limpiar Campos
+                </button>
             </div>
         </form>
 
@@ -52,10 +61,6 @@
 
         <div id="message" class="message"></div>
     </div>
-
-    <!-- JavaScript -->
-    <script src="/static/js/jquery-3.5.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#generarReporteProductosBtn').click(function() {
@@ -95,7 +100,7 @@
                     },
                     success: function(response) {
                         var data = response[tipo];
-                        var html = '<table class="table"><thead>';
+                        var html = '<thead>';
 
                         if (tipo === 'productos') {
                             html += '<tr><th>ID Producto</th><th>Nombre Producto</th><th>Cantidad Total</th><th>Tipo Almacén</th><th>Dirección</th><th>Correo</th><th>Teléfono</th></tr>';
@@ -113,7 +118,7 @@
                             }
                         });
 
-                        html += '</tbody></table>';
+                        html += '</tbody>';
 
                         if (tipo === 'productos') {
                             $('#productosTable').html(html);
@@ -126,18 +131,45 @@
                         }
                     },
                     error: function(xhr, status, error) {
-                        $('#message').html('Error al generar el reporte').addClass('text-danger');
-                        console.log(xhr.responseText);
+                        $('#message').html('Error al generar el reporte').removeClass('text-success').addClass('text-danger');
                     }
                 });
             }
 
             function descargarPDF() {
-                var pdf = new jsPDF();
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF();
 
-                pdf.text(20, 20, 'Este es un ejemplo de contenido en el PDF.');
+                // Agregar contenido de la tabla de productos si está visible
+                if ($('#productosTabla').is(':visible')) {
+                    pdf.text("Inventario de Productos", 10, 20);
+                    const productos = [];
+                    $('#productosTable tbody tr').each(function() {
+                        const row = [];
+                        $(this).find('td').each(function() {
+                            row.push($(this).text());
+                        });
+                        productos.push(row);
+                    });
+                    pdf.autoTable({ head: [['ID Producto', 'Nombre Producto', 'Cantidad Total', 'Tipo Almacén', 'Dirección', 'Correo', 'Teléfono']], body: productos, startY: 30 });
+                }
 
-                pdf.save('reporte.pdf');
+                // Agregar contenido de la tabla de solicitudes si está visible
+                if ($('#solicitudesTabla').is(':visible')) {
+                    const lastY = pdf.lastAutoTable ? pdf.lastAutoTable.finalY + 20 : 20;
+                    pdf.text("Informe de Solicitudes", 10, lastY);
+                    const solicitudes = [];
+                    $('#solicitudesTable tbody tr').each(function() {
+                        const row = [];
+                        $(this).find('td').each(function() {
+                            row.push($(this).text());
+                        });
+                        solicitudes.push(row);
+                    });
+                    pdf.autoTable({ head: [['ID Solicitud', 'Tipo Almacén', 'Nombre Persona', 'Nombre Producto', 'Cantidad', 'Fecha Solicitud']], body: solicitudes, startY: lastY + 10 });
+                }
+
+                pdf.save("reporte.pdf");
             }
         });
     </script>

@@ -7,6 +7,8 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
+
+
 APP_NAME = 'almacen_app'
 
 urlpatterns = [
@@ -17,5 +19,6 @@ urlpatterns = [
     path('registrar_productos/', views.registrar_productos_view, name='registrar_productos'),
     path('consultar-productos/', views.consultar_productos, name='consultar_productos'),
     path('solicitudes/', views.solicitudes_view, name='solicitudes'),
+    path('borrar/', views.borrar_producto,name='borrar_producto'),  # BORRA SOLICITUDES AGREGADO
     path('generar_reportes/', views.generar_reportes, name='generar_reportes'),
 ]

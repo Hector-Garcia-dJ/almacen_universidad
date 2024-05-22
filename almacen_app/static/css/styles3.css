@@ -150,3 +150,59 @@ button#limpiar i {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
 }
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 20px;
+    padding: 8px 16px;
+    white-space: normal;
+  }
+
+  .principal {
+    font-size: 16px;
+    margin-top: 20px;
+  }
+
+  form {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  form .contenido > * {
+    flex: 1 1 100%; /* Ajuste de los elementos para que ocupen el 100% del ancho del contenedor */
+    margin: 5px 0;
+  }
+
+  form label,
+  form input,
+  form button {
+    font-size: 14px;
+  }
+
+  form input {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  form button,
+  .qrButton,
+  .consultar-link button {
+    padding: 10px 15px;
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .formulario button i,
+  .formulario_qr button i {
+    margin-right: 5px;
+  }
+
+  .consultar-link a {
+    justify-content: center;
+  }
+}

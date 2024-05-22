@@ -11,6 +11,7 @@ body {
     align-items: center;
     height: 100vh;
     backdrop-filter: blur(4px);
+    overflow: hidden; /* Para evitar scroll no deseado en la página */
 }
 
 h1 {
@@ -85,7 +86,6 @@ h2 {
 .formulario button,
 .formulario-correo button {
     padding: 8px 16px;
-    background-color: #4CAF50;
     color: black;
     border-radius: 50px;
     cursor: pointer;
@@ -95,11 +95,11 @@ h2 {
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-bottom: 10px; /* Añadido para separar los botones verticalmente */
+    margin-bottom: 10px;
 }
 
 .formulario button i,
-.formulario-correo button i{
+.formulario-correo button i {
     margin-right: 10px;
 }
 
@@ -111,7 +111,7 @@ h2 {
     color: black;
 }
 
-.formulario button.reporte {
+.formulario button {
     background-color: #2c82c9;
 }
 
@@ -165,6 +165,13 @@ h2 {
     position: relative;
 }
 
+/* Contenedor scrollable para la tabla */
+.scrollable-table {
+    max-height: 400px; /* Ajusta este valor según tu necesidad */
+    overflow-y: auto;
+    margin-top: 20px;
+}
+
 .tabla-solicitud {
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
@@ -195,4 +202,61 @@ h2 {
 .tabla-solicitud td {
     background-color: #fff;
     color: #333;
+}
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 20px;
+        top: 20px;
+    }
+
+    h2 {
+        font-size: 14px;
+        top: 40px;
+    }
+
+    .formulario-container {
+        flex-direction: column;
+        max-width: 90%;
+        padding: 10px;
+        gap: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .formulario, .formulario-correo {
+        margin: 0;
+    }
+
+    .formulario input,
+    .formulario textarea,
+    .formulario select,
+    .formulario-correo input,
+    .formulario-correo textarea,
+    .formulario-correo select {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .formulario button,
+    .formulario-correo button {
+        width: 100%;
+    }
+
+    .tabla-container {
+        margin: 0;
+    }
+
+    .tabla-solicitud {
+        position: static;
+        width: 100%;
+        padding: 10px;
+    }
 }

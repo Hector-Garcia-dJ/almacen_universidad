@@ -1,0 +1,135 @@
+/* Fuente personalizada y configuración general */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    color: black;
+    margin: 0;
+    background-image: url('../img/img3.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    backdrop-filter: blur(4px);
+    overflow: hidden; /* Para evitar scroll no deseado en la página */
+}
+
+h1 {
+    color: #333;
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 20px;
+    background-color: rgba(252, 140, 65, 0.788);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    display: inline-block;
+    position: relative;
+}
+
+/* Contenedor de la tabla */
+.table-container {
+    width: 80%;
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Contenedor scrollable para la tabla */
+.scrollable-table {
+    max-height: 400px; /* Ajusta este valor según tu necesidad */
+    overflow-y: auto;
+}
+
+/* Estilo de la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+thead {
+    background-color: #384edb;
+    color: #ffffff;
+}
+
+thead th {
+    padding: 15px;
+    font-weight: bold;
+}
+
+tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #e2e2e2;
+}
+
+tbody td {
+    padding: 15px;
+}
+
+tbody td:first-child {
+    font-weight: bold;
+    color: #4a4e69;
+}                       
+
+/* Resaltar el primer y último hijo */
+tbody tr:first-child td {
+    border-top: 2px solid #4f63e7;
+}
+
+tbody tr:last-child td {
+    border-bottom: 2px solid #4a4e69;
+}
+
+/* Adaptabilidad a pantallas pequeñas */
+@media (max-width: 600px) {
+    body {
+        padding: 20px;
+    }
+
+    .table-container {
+        width: 100%;
+        margin: 0;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tbody td {
+        display: block;
+        text-align: right;
+        padding: 10px;
+        border-bottom: 1px solid #dddddd;
+    }
+
+    tbody td:before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        color: #4a4e69;
+    }
+
+    tbody tr {
+        display: block;
+        margin-bottom: 15px;
+    }
+
+    tbody tr:last-child {
+        margin-bottom: 0;
+    }
+}

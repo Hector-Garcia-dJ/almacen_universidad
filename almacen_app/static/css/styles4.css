@@ -37,7 +37,7 @@ h1 {
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -80,14 +80,15 @@ button {
     background-color: #503bc9;
 }
 
-.r_solicitud{
+.r_solicitud {
     background-color: #c054ca;
 }
 
 .pdf {
     background-color: #3aac4d;
 }
-.borrar{
+
+.borrar {
     background-color: #ce3b3b;
 }
 
@@ -100,6 +101,7 @@ button:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 /* Tablas */
 .table-container {
     width: 200%;
@@ -132,7 +134,7 @@ td {
 
 /* Estilos para las tablas específicas */
 #productosTabla, #solicitudesTabla {
-    display: none; /* Ocultar las tablas inicialmente */
+    display: none;
 }
 
 /* Estilos para mensajes de error o éxito */
@@ -165,7 +167,7 @@ td {
 
 .formulario label, .formulario-correo label {
     font-size: 16px;
-    color:black;
+    color: black;
 }
 
 .formulario input, .formulario textarea, .formulario select,
@@ -214,12 +216,59 @@ td {
     background-color: #fff;
     color: #333;
 }
-.form-group{
+
+.form-group {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-label{
-color: #000;
+
+label {
+    color: #000;
+}
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 20px;
+        padding: 8px 16px;
+        white-space: normal;
+    }
+
+    .container {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button-container button {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    .formulario-container {
+        flex-direction: column;
+    }
+
+    .formulario, .formulario-correo {
+        width: 100%;
+    }
 }

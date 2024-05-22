@@ -2,26 +2,29 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1366, initial-scale=0.8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registro de Nueva Solicitud</title>
     <link rel="preload" href="/static/css/normalize.css" as="style">
     <link rel="preload" href="/static/css/styles6.css">
-    <link rel="icon" href="https://th.bing.com/th/id/OIP.Iuq-Qr4l4LjFcvCyflnI7wHaHa?rs=1&pid=ImgDetMain" type="image/x-icon"/>
-    <script src="/static/js/jquery-3.5.1.js"></script>
-    <script src="/statatic/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/static/css/styles6.css">
-    <<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="icon"href="../static/img/solicitud.png"type="image/x-icon"/>
+    {% load static %}
+    <script src="{% static '/js/jquery-3.5.1.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.17/jspdf.plugin.autotable.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles6.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
   </head>
   <body>
     <h1>Registro de Nueva Solicitud</h1>
+    {% if error_message %}
+    <div class="error-message">
+      <p>{{ error_message }}</p>
+    </div>
+    {% endif %}
+
     <div class="formulario-container">
       <div class="formulario">
-        <form
-          id="solicitudForm"
-          method="post"
-          action="{% url 'solicitudes' %}"
-        >
+        <form id="solicitudForm" method="post" action="{% url 'solicitudes' %}">
           {% csrf_token %}
           <label for="tipo_almacen">Tipo de Almacén:</label>
           <select id="tipo_almacen" name="tipo_almacen" required>
@@ -53,63 +56,52 @@
 
           <label for="cantidad">Cantidad:</label>
           <input type="number" id="cantidad" name="cantidad" min="1" />
-
+          <div
+            id="error-message"
+            class="error-message"
+            style="color: red"
+          ></div>
           <div class="botones">
-            <button type="button" class="agregar"><i class="fas fa-plus"></i>Agregar</button>
-            <button type="button" class="borrar" id="limpiar_campos"><i class="fas fa-trash-alt"></i>Limpiar</button>
-            <button type="button" class="reporte"  id="btn-generar-reporte"><i class="fas fa-file-alt"></i>
-              Generar Reporte
+            <button type="submit" class="agregar">
+              <i class="fas fa-plus"></i>Agregar
+            </button>
+            <button class="borrar" type="button"  id="limpiar_campos">
+              <i class="fas fa-trash-alt"></i>Borrar
+            </button>
+            <button type="button" class="descargar-pdf" id="btn-descargar-pdf">
+              <i class="fas fa-file-alt"></i> Reporte
             </button>
           </div>
         </form>
       </div>
 
       <div class="tabla-container">
-        {% comment %} <h2>-Productos Solicitados</h2> {% endcomment %}
         <div class="tabla-solicitud" style="display: none">
+          <div class="scrollable-table">
           <table>
             <thead>
               <tr>
+                <th>ID Solicitud</th>
                 <th>Tipo de Almacén</th>
                 <th>Nombre de Persona</th>
                 <th>Nombre del Producto</th>
                 <th>Cantidad</th>
               </tr>
             </thead>
-            <tbody id="tabla-solicitud-body">
-              <!-- Aquí se renderizarán los datos de los productos solicitados -->
-            </tbody>
+            <tbody id="tabla-solicitud-body"></tbody>
           </table>
+        </div>
         </div>
       </div>
 
-      <!-- FORMULARIO, NO FUNCIONAL -->
-      <div class="formulario-reporte">
-        <form action="{% url 'generar_reportes' %}" method="post">
-          {% csrf_token %} {% for fila in tabla %}
-          <input
-            type="hidden"
-            name="tipo_almacen[]"
-            value="{{ fila.tipo_almacen }}"
-          />
-          <input
-            type="hidden"
-            name="nombre_persona[]"
-            value="{{ fila.nombre_persona }}"
-          />
-          <input
-            type="hidden"
-            name="nombre_producto[]"
-            value="{{ fila.nombre_producto }}"
-          />
-          <input type="hidden" name="cantidad[]" value="{{ fila.cantidad }}" />
-          {% endfor %}
-        </form>
-      </div>
-
+      {% comment %} <h2>Formulario de Correo</h2> {% endcomment %}
       <div class="formulario-correo">
-        {% comment %} <h2>Formulario de Correo</h2> {% endcomment %}
-        <form method="post" action="{% url 'solicitudes' %}">
+        <form
+          id="formulario-correo"
+          method="POST"
+          action="{% url 'solicitudes' %}"
+        >
+          {% csrf_token %}
           <br />
           <label for="destinatario">Destinatario</label>
           <input type="email" id="destinatario" name="destinatario" required />
@@ -117,13 +109,130 @@
           <input type="text" id="asunto" name="asunto" required />
           <label for="mensaje">Mensaje</label>
           <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
-          <button type="button" class="enviar-correo"id="boton-enviar-correo"disabled><i class="fas fa-envelope"></i>Enviar Correo</button>
+          <button
+            type="submit"
+            class="enviar-correo"
+            id="boton-enviar-correo"
+            disabled
+          >
+            <i class="fas fa-envelope"></i>Enviar Correo
+          </button>
         </form>
       </div>
     </div>
 
     <script>
       $(document).ready(function () {
+        // Obtener el token CSRF del formulario
+        var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+
+        // Configurar AJAX para incluir el token CSRF
+        $.ajaxSetup({
+          beforeSend: function (xhr, settings) {
+            if (
+              !/^http:.*/.test(settings.url) &&
+              !/^https:.*/.test(settings.url)
+            ) {
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+          },
+        });
+
+        // Evento clic en el botón "Descargar PDF"
+        $("#btn-descargar-pdf").on("click", function () {
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF();
+
+          // Definir estilos como variables
+          const titleFontSize = 16;
+          const subtitleFontSize = 12;
+          const contentFontSize = 10;
+          const boldFont = "bold";
+          const normalFont = "normal";
+          const lineHeight = 10;
+          const titleColor = [52, 152, 219];
+          const margin = 10;
+          let currentY = 20;
+
+          // Funciones para aplicar estilos
+          function setTitleStyle() {
+            pdf.setFontSize(titleFontSize);
+            pdf.setFont("helvetica", boldFont);
+          }
+
+          function setSubtitleStyle() {
+            pdf.setFontSize(subtitleFontSize);
+            pdf.setFont("helvetica", normalFont);
+          }
+
+          function setContentStyle() {
+            pdf.setFontSize(contentFontSize);
+            pdf.setFont("helvetica", normalFont);
+          }
+
+          // Datos de la solicitud
+          var tipoAlmacen = $("#tipo_almacen option:selected").text();
+          var nombrePersona = $("#nombre_persona option:selected").text();
+          var nombreProducto = $("#nombre_producto option:selected").text();
+          var cantidad = $("#cantidad").val();
+
+          // Título principal
+          setTitleStyle();
+          pdf.text("Datos de la Solicitud", margin, currentY);
+          currentY += 10;
+          
+
+          // Tabla de productos si está visible
+          if ($(".tabla-solicitud").is(":visible")) {
+            setTitleStyle();
+            pdf.text("Solicitudes de Productos", margin, currentY);
+            currentY += 10;
+
+            const productos = [];
+            $("#tabla-solicitud-body tr").each(function () {
+              const row = [];
+              $(this)
+                .find("td")
+                .each(function () {
+                  row.push($(this).text());
+                });
+              productos.push(row);
+            });
+
+            // Configuración de la tabla
+            pdf.autoTable({
+              head: [
+                [
+                  "ID Solicitud",
+                  "Tipo de Almacén",
+                  "Nombre de Persona",
+                  "Nombre del Producto",
+                  "Cantidad",
+                ],
+              ],
+              body: productos,
+              startY: currentY,
+              theme: "striped", // Tema de la tabla
+              headStyles: { fillColor: titleColor }, // Color de fondo de la cabecera
+              styles: { font: "helvetica", fontSize: contentFontSize }, // Estilo de la fuente
+              margin: { top: 20 }, // Margen superior
+            });
+          }
+
+          // Guardar el PDF
+          pdf.save("SOLICITUD.pdf");
+
+          // Llenar automáticamente los campos del formulario de correo
+          $("#destinatario").val("dannrobles10@gmail.com");
+          $("#asunto").val("SOLICITUD DE PRODUCTOS");
+          $("#mensaje").val(
+            "Estimado/a, adjunto encontrará el reporte de las solicitudes de productos."
+          );
+          // Habilitar el botón de enviar correo
+          $("#boton-enviar-correo").prop("disabled", false);
+        });
+
+        // Enviar formulario de solicitud
         $(".agregar").on("click", function (event) {
           event.preventDefault();
           var formData = $("#solicitudForm").serialize();
@@ -133,7 +242,7 @@
             data: formData,
             success: function (data) {
               console.log(data);
-              if (data) {
+              if (data.solicitud_id) {
                 alert("Solicitud realizada correctamente.");
 
                 // Agregar una fila a la tabla con los datos de la solicitud
@@ -143,9 +252,12 @@
                   "#nombre_producto option:selected"
                 ).text();
                 var cantidad = $("#cantidad").val();
+                var solicitud_id = data.solicitud_id;
 
                 var newRow =
                   "<tr><td>" +
+                  solicitud_id +
+                  "</td><td>" +
                   tipoAlmacen +
                   "</td><td>" +
                   nombrePersona +
@@ -159,9 +271,7 @@
                 // Mostrar la tabla después de agregar la fila
                 $(".tabla-solicitud").show();
               } else {
-                $("#resultadosBusqueda").html(
-                  "<p>Ocurrió un error al procesar la solicitud.</p>"
-                );
+                $("#error-message").text("Error: " + data.error); // Mostrar el mensaje de error
               }
             },
             error: function (xhr, errmsg, err) {
@@ -170,29 +280,51 @@
           });
         });
 
-        $("#btn-generar-reporte").on("click", function () {
-          var formData = new FormData($("#solicitudForm")[0]); // Utiliza FormData para enviar el formulario completo
+        // Evento clic en el botón de borrar
+        $(document).on("click", ".borrar", function () {
+          var solicitudId = prompt("Ingresa el ID de la solicitud a borrar:");
+          if (solicitudId !== null) {
+            $.ajax({
+              url: "{% url 'borrar_producto' %}",
+              type: "POST",
+              data: {
+                csrfmiddlewaretoken: csrftoken,
+                solicitud_id: solicitudId,
+              },
+              success: function (response) {
+                alert(response.message);
+                // Remover la fila correspondiente de la tabla
+                $("#tabla-solicitud-body tr").each(function () {
+                  var row = $(this);
+                  if (row.find("td:first").text() == solicitudId) {
+                    row.remove();
+                  }
+                });
+              },
+              error: function (xhr, errmsg, err) {
+                console.log(errmsg);
+              },
+            });
+          }
+        });
+
+        // Evento submit del formulario de correo
+        $("#formulario-correo").on("submit", function (event) {
+          event.preventDefault();
+          var formData = $(this).serialize();
+
+          // Enviar los datos del formulario al servidor
           $.ajax({
-            type: "POST",
-            url: "{% url 'generar_reportes' %}",
+            url: $(this).attr("action"),
+            type: $(this).attr("method"),
             data: formData,
-            processData: false, // Evita que jQuery convierta el objeto formData en una cadena de consulta
-            contentType: false, // Evita que jQuery configure incorrectamente el encabezado Content-Type
-            beforeSend: function (xhr, settings) {
-              xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}"); // Incluye el token CSRF en la solicitud
-            },
             success: function (response) {
-              var blob = new Blob([response], {
-                type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-              });
-              var link = document.createElement("a");
-              link.href = window.URL.createObjectURL(blob);
-              link.download = "reporte.docx";
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
+              // Manejar la respuesta del servidor
+              console.log(response);
+              console.log("Hola"); // PRUEBA PARA MOSTRAR TEXTO
             },
             error: function (xhr, errmsg, err) {
+              // Manejar errores
               console.log(errmsg);
             },
           });

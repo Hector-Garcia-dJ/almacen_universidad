@@ -7,11 +7,13 @@
     <!-- Pre-carga y enlace de la hoja de estilos styles8.css -->
     <link rel="preload" href="/static/css/normalize.css" as="style">
     <link rel="preload" href="/static/css/styles8.css" as="style">
+    <link rel="icon" href="../static/img/consulta.png" type="image/x-icon">
     <link href="/static/css/styles8.css" rel="stylesheet">
 </head>
 <body>
     <h1>Productos Registrados</h1>
     <div class="table-container">
+        <div class="scrollable-table">
         <table>
             <thead>
                 <tr>
@@ -30,6 +32,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        </div>
     </div>
 </body>
 </html>

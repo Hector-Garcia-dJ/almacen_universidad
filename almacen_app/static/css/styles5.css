@@ -4,12 +4,13 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     background-image: url('../img/img2.jpg');
-    background-size: contain; /* Ajusta la imagen para que se vea completa */
+    background-size: contain;
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
-    backdrop-filter: blur(3px); /* Aplica el desenfoque */
+    backdrop-filter: blur(3px);
 }
+
 .header {
     text-align: center;
     padding: 30px;
@@ -17,29 +18,29 @@ body {
 
 .header h1 {
     color: #333;
-    font-family: 'Arial', sans-serif; /* Agregar fuente */
-    font-size: 24px; /* Ajustar tamaño de fuente */
-    font-weight: bold; /* Añadir negrita */
-    padding: 10px 20px; /* Ajustar el relleno */
-    background-color: rgba(252, 140, 65, 0.788); /* Ajustar color de fondo */
-    border-radius: 10px; /* Redondear los bordes */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Agregar sombra */
-    white-space: nowrap; /* Evitar división de texto en varias líneas */
-    display: inline-block; /* Cambiar a bloque en línea */
-    position: relative; /* Añadir posición relativa */
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 20px;
+    background-color: rgba(252, 140, 65, 0.788);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+    display: inline-block;
+    position: relative;
 }
 
 .header h1:hover {
-    background: linear-gradient(135deg, #4ebef2d0, #74b2f1d0); /* Cambiar color de fondo a degradado azul */
-    background-color: rgba(0, 0, 0, 0.8); /* Cambiar color de fondo al pasar el mouse */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4); /* Aumentar sombra */
+    background: linear-gradient(135deg, #4ebef2d0, #74b2f1d0);
+    background-color: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
 }
 
 .formulario {
     width: 40%;
     max-width: 400px;
-    margin: -55px auto -20px auto; /* Ajuste para subir el contenedor */
-    padding: 30px; /* Aumentado el relleno */
+    margin: -55px auto -20px auto;
+    padding: 30px;
     border: 1px solid #ccc;
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 15px;
@@ -49,21 +50,21 @@ body {
 
 .contenido {
     display: flex;
-    flex-wrap: wrap; /* Permite que los elementos se distribuyan en varias filas */
-    justify-content: space-between; /* Distribuye los elementos horizontalmente */
-    align-items: center; /* Centra verticalmente los elementos */
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
     padding: 40px;
-    width: 100%; /* Ajusta el ancho para que sea el 100% del contenedor padre */
-    box-sizing: border-box; /* Incluye el padding y el border en el ancho total */
-    transition: all 0.3s ease; /* Agregamos una transición suave */
-    animation: fadeIn 0.5s ease; /* Agregamos una animación de entrada */
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease;
     border-color: #000000;
 }
 
 .contenido > * {
-    flex: 1 1 45%; /* Los elementos ocupan el 45% del ancho del contenedor, permitiendo espacio para el gap */
-    margin-bottom: 20px; /* Espacio inferior entre filas */
-    box-sizing: border-box; /* Incluye padding y border en el tamaño total */
+    flex: 1 1 45%;
+    margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
 @keyframes slideIn {
@@ -96,53 +97,99 @@ body {
 
 .formulario .botones {
     margin-bottom: 10px;
-    display: flex; /* Hacer que los botones estén en línea */
-    justify-content: center; /* Centrar los botones horizontalmente */
-    margin-top: 20px; /* Espacio entre los campos y los botones */
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
     justify-content: space-around;
 }
 
 .formulario button {
     margin-bottom: 10px;
     color: #000000;
-    padding: 10px 24px; /* Aumentado el relleno */
+    padding: 10px 24px;
     border: none;
     border-radius: 25px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s, color 0.3s;
-    white-space: nowrap; 
+    white-space: nowrap;
     display: flex;
-    height: 40px; /* Altura fija para todos los botones */
+    height: 40px;
     justify-content: center;
     align-items: center;
 }
-.borrar{
+
+.borrar {
     background-color: #d8375a;
 }
-.agregar{
+
+.agregar {
     background-color: #27dd88;
 }
 
 .formulario button i {
     margin-bottom: 10px;
-    margin-right: 10px; /* Espaciado entre el icono y el texto del botón */
+    margin-right: 10px;
     margin-top: 10px;
     margin-left: 10px;
 }
 
 .formulario button:hover {
     background-color: #3474ff;
-    transform: translateY(-3px); /* Agregamos un efecto de elevación al pasar el mouse */
+    transform: translateY(-3px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     color: #fff;
 }
 
-input{
+input {
     width: calc(100% - 30px);
-    border: 5px solid #3c80e7; /* Cambia el grosor y el color del borde */
+    border: 5px solid #3c80e7;
     border-radius: 50px;
-    padding: 10px; /* Ajusta el relleno del formulario */
-    font-size: 15px; /* Ajusta el tamaño del texto en el formulario */
-    transition: border-color 0.3s ease; /* Efecto de transición en el borde */
+    padding: 10px;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+}
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+    .header {
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 20px;
+        padding: 8px 16px;
+        white-space: normal;
+    }
+
+    .formulario {
+        width: 90%;
+        max-width: none;
+        padding: 20px;
+        margin: -30px auto 0 auto;
+    }
+
+    .contenido {
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .contenido > * {
+        flex: 1 1 100%;
+        margin-bottom: 10px;
+    }
+
+    .formulario .botones {
+        flex-direction: column;
+    }
+
+    .formulario button{
+    width: 100%;
+    margin: 10px 0;
+}
+
+input {
+    width: calc(100% - 20px);
+}
 }
