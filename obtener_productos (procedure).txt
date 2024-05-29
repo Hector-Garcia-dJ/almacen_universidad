@@ -1,0 +1,5 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerProductos`()
+BEGIN
+    SELECT id_producto, nombre_producto, cantidad
+    FROM almacen_app_producto;
+END
