@@ -1,0 +1,18 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GenerarReporteProductos`(
+    IN fecha_inicio DATETIME,
+    IN fecha_fin DATETIME
+)
+BEGIN
+    -- Consulta para obtener los productos en el almacén en el rango de fechas
+    SELECT p.id_producto, p.nombre_producto, SUM(s.cantidad) as cantidad_total, a.tipo_almacen, a.direccion, a.correo, a.telefono
+	FROM uacm_2.almacen_app_producto p
+	INNER JOIN uacm_2.almacen_app_solicitud s ON p.id_producto = s.id_producto_id
+	INNER JOIN uacm_2.almacen_app_almacen a ON s.id_almacen_id = a.id_almacen
+	WHERE s.fecha_solicitud BETWEEN fecha_inicio AND fecha_fin
+	GROUP BY p.id_producto, p.nombre_producto, a.tipo_almacen, a.direccion, a.correo, a.telefono;
+
+    -- Consulta para obtener las solicitudes de productos en el rango de fechas
+    SELECT s.id_solicitud, s.tipo_almacen, s.nombre_persona, s.nombre_producto, s.cantidad, s.fecha_solicitud
+    FROM uacm_2.almacen_app_solicitud s
+    WHERE s.fecha_solicitud BETWEEN fecha_inicio AND fecha_fin;
+END
