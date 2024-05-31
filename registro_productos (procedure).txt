@@ -1,9 +1,0 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `RegistrarProducto`(
-    IN p_id INT,
-    IN p_nombre VARCHAR(255),
-    IN p_cantidad INT
-)
-BEGIN
-    INSERT INTO almacen_app_producto (id_producto, nombre_producto, cantidad)
-    VALUES (p_id, p_nombre, p_cantidad);
-END
